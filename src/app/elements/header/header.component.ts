@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import {MatToolbar} from '@angular/material/toolbar';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import {MatButton} from '@angular/material/button';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'pm-header',
   imports: [
     MatToolbar,
-    MatIconButton,
-    MatIcon,
-    MatButton
+    MatButton,
+    MatMenuTrigger,
+    MatMenu,
+    RouterLink,
+    MatMenuItem
   ],
   templateUrl: './header.component.html',
   standalone: true,

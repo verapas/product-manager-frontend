@@ -1,11 +1,8 @@
-footer {
-  text-align: center;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  color: #6c757d;
-  font-size: 0.9rem;
-  border-top: 1px solid #e9ecef;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+.footer-toolbar {
+//  position: fixed; /* Fixiert die Toolbar */
+//  bottom: 0; /* Immer am unteren Rand der Seite */
+//  left: 0;
+//  width: 100%; /* Nimmt die volle Breite der Seite ein */
+//  z-index: 1000; /* Stellt sicher, dass die Toolbar über anderen Elementen bleibt */
+  text-align: center; /* Zentriert den Inhalt */
 }

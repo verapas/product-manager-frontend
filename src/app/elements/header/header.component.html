@@ -1,11 +1,18 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-    <mat-icon>menu</mat-icon>
-  </button>
+  <button mat-button routerLink="/">Produktmanager</button>
 
   <span class="spacer"></span>
 
+  <button mat-button [matMenuTriggerFor]="productsMenu">Produkte</button>
+  <mat-menu #productsMenu="matMenu">
+    <button mat-menu-item routerLink="/products/list">Produktübersicht</button>
+    <button mat-menu-item routerLink="/products/modify">Produkt erstellen</button>
+  </mat-menu>
 
-  <button mat-button>Products</button>
-  <button mat-button>Categories</button>
+  <button mat-button [matMenuTriggerFor]="categoryMenu">Kategorien</button>
+  <mat-menu #categoryMenu="matMenu">
+    <button mat-menu-item routerLink="/categories/list">Alle Kategorien</button>
+    <button mat-menu-item routerLink="/categories/modify">Kategorie erstellen</button>
+  </mat-menu>
+
 </mat-toolbar>

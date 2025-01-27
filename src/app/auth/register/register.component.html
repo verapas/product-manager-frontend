@@ -1,1 +1,118 @@
-<p>register works!</p>
+<form [formGroup]="registerFormGroup" (ngSubmit)="onSubmit()" class="register-form">
+  <mat-card>
+    <mat-card-header>
+      <h2>Registrierung</h2>
+    </mat-card-header>
+    <mat-card-content>
+
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Vorname</mat-label>
+          <input matInput formControlName="firstName" placeholder="Geben Sie Ihren Vornamen ein" />
+          @if (registerFormGroup.get('firstName')?.hasError('required')) {
+            <mat-error>Vorname ist erforderlich</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Nachname</mat-label>
+          <input matInput formControlName="lastName" placeholder="Geben Sie Ihren Nachnamen ein" />
+          @if (registerFormGroup.get('lastName')?.hasError('required')) {
+            <mat-error>Nachname ist erforderlich</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Strasse</mat-label>
+        <input matInput formControlName="street" placeholder="Geben Sie Ihre Strasse ein" />
+        @if (registerFormGroup.get('street')?.hasError('required')) {
+          <mat-error>Strasse ist erforderlich</mat-error>
+        }
+      </mat-form-field>
+
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>PLZ</mat-label>
+          <input matInput formControlName="zip" placeholder="Geben Sie Ihre Postleitzahl ein" />
+          @if (registerFormGroup.get('zip')?.hasError('required')) {
+            <mat-error>PLZ ist erforderlich</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Stadt</mat-label>
+          <input matInput formControlName="city" placeholder="Geben Sie Ihre Stadt ein" />
+          @if (registerFormGroup.get('city')?.hasError('required')) {
+            <mat-error>Stadt ist erforderlich</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Land</mat-label>
+        <input matInput formControlName="country" placeholder="Geben Sie Ihr Land ein" />
+        @if (registerFormGroup.get('country')?.hasError('required')) {
+          <mat-error>Land ist erforderlich</mat-error>
+        }
+      </mat-form-field>
+
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Telefon</mat-label>
+          <input matInput formControlName="phone" placeholder="Optional" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Mobiltelefon</mat-label>
+          <input matInput formControlName="mobilePhone" placeholder="Optional" />
+        </mat-form-field>
+      </div>
+
+
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>E-Mail</mat-label>
+        <input matInput formControlName="email" type="email" placeholder="Geben Sie Ihre E-Mail ein" />
+        @if (registerFormGroup.get('email')?.hasError('required')) {
+          <mat-error>E-Mail ist erforderlich</mat-error>
+        }
+        @if (registerFormGroup.get('email')?.hasError('email')) {
+          <mat-error>Ungültige E-Mail-Adresse</mat-error>
+        }
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Passwort</mat-label>
+          <input matInput formControlName="password" type="password" placeholder="Geben Sie Ihr Passwort ein" />
+          @if (registerFormGroup.get('password')?.hasError('required')) {
+            <mat-error>Passwort ist erforderlich</mat-error>
+          }
+          @if (registerFormGroup.get('password')?.hasError('minlength')) {
+            <mat-error>Passwort muss mindestens 8 Zeichen lang sein.</mat-error>
+          }
+          @if (registerFormGroup.get('password')?.hasError('pattern')) {
+            <mat-error>Zahl, Großbuchstabe sowie ein Sonderzeichen nötig (&#64;#$%^&+=)</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Passwort bestätigen</mat-label>
+          <input matInput formControlName="confirmPassword" type="password" placeholder="Passwort bestätigen" />
+          @if (registerFormGroup.get('confirmPassword')?.hasError('required')) {
+            <mat-error>Passwort-Bestätigung ist erforderlich</mat-error>
+          }
+          @if (registerFormGroup.hasError('passwordsDoNotMatch')) {
+            <mat-error>Passwörter stimmen nicht überein</mat-error>
+          }
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" routerLink="/auth/login">Zurück zum login</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="registerFormGroup.invalid">Registrieren</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

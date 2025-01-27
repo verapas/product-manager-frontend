@@ -1,1 +1,23 @@
-<p>modify works!</p>
+<div>
+  <h2>Produkte Erstellen / Bearbeiten</h2>
+  <div class="form">
+
+    <mat-form-field>
+      <mat-label>Produktname</mat-label>
+      <input matInput [formControl]="productFormGroup.controls.name">
+      @if (productFormGroup.controls.name.touched && productFormGroup.controls.name.invalid && productFormGroup.controls.name.hasError('required')) {
+        <mat-error>Produktname ist ein Pflichtfeld</mat-error>
+      } @else if (productFormGroup.controls.name.touched && productFormGroup.controls.name.invalid && productFormGroup.controls.name.hasError('minlength')) {
+        <mat-error>Die Mindestlänge des Produktnamens beträgt {{productFormGroup.controls.name.getError('minlength').requiredLength }} Zeichen</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Kategorie auswählen</mat-label>
+      <mat-select [formControl]="productFormGroup.controls.category" >
+        <mat-option [value]="1">Spielzeug</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onSubmit()">Speichern</button>
+  </div>
+</div>
