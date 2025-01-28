@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader} from '@angular/material/card';
 import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
-import {RouterLink} from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
+import {UserControllerService} from '../../openapi-client';
 
 @Component({
   selector: 'pm-login',
@@ -28,18 +29,51 @@ import {RouterLink} from '@angular/router';
 })
 export class LoginComponent {
 
+  userControllerService = inject(UserControllerService);
+  router = inject(Router);
+
+  errorMessage: string | null = null;
+
   loginFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
   onSubmit() {
-    if (this.loginFormGroup.valid) {
-      console.log(this.loginFormGroup.value);
-      // Todo web request an den server
-    } else {
-      console.error('Formular ist ungültig');
-      console.log(this.loginFormGroup);
+    this.errorMessage = null; // Fehlermeldung zurücksetzen
+
+    if (this.loginFormGroup.invalid) {
+      this.loginFormGroup.markAllAsTouched();
+      return;
     }
+
+    const formData = this.loginFormGroup.value;
+
+    this.userControllerService.login({
+      email: formData.email!,
+      password: formData.password!,
+    }).subscribe({
+      next: (response) => {
+        if (response.token) {
+          //Bearer token ausgeben in der konsole
+          console.log('Bearer Token:', response.token);
+
+          // Speichert den Token im local-Storage
+          localStorage.setItem('ACCESS_TOKEN', response.token);
+
+          // Weiterleitung zum Dashboard
+          this.router.navigate(['/general-sites/dashboard']);
+        } else {
+          this.errorMessage = 'Token fehlt in der API-Antwort.';
+          console.error('Token fehlt in der Antwort:', response);
+        }
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.';
+        console.error('Fehler beim Login:', err);
+      }
+    });
   }
+
+
 }

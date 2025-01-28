@@ -13,4 +13,8 @@ export const generalSitesRoutes: Routes = [
     path: 'contact',
     loadComponent: () => import('./contact/contact.component').then(c => c.ContactComponent),
   },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./dashboard/dashboard.component').then(c => c.DashboardComponent),
+  },
 ];

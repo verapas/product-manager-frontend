@@ -28,6 +28,13 @@
             <mat-error>Das Passwort muss mindestens 8 Zeichen lang sein</mat-error>
           }
         </mat-form-field>
+
+        @if (errorMessage) {
+          <mat-error class="error-message">
+            {{ errorMessage }}
+          </mat-error>
+        }
+
       </mat-card-content>
 
       <mat-card-actions>

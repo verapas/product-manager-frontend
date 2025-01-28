@@ -40,6 +40,7 @@
             <mat-error>PLZ ist erforderlich</mat-error>
           }
         </mat-form-field>
+
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Stadt</mat-label>
           <input matInput formControlName="city" placeholder="Geben Sie Ihre Stadt ein" />
@@ -47,16 +48,15 @@
             <mat-error>Stadt ist erforderlich</mat-error>
           }
         </mat-form-field>
+
+        <mat-form-field appearance="fill" class="form-field">
+          <mat-label>Land</mat-label>
+          <input matInput formControlName="country" placeholder="Geben Sie Ihr Land ein" />
+          @if (registerFormGroup.get('country')?.hasError('required')) {
+            <mat-error>Land ist erforderlich</mat-error>
+          }
+        </mat-form-field>
       </div>
-
-
-      <mat-form-field appearance="fill" class="form-field">
-        <mat-label>Land</mat-label>
-        <input matInput formControlName="country" placeholder="Geben Sie Ihr Land ein" />
-        @if (registerFormGroup.get('country')?.hasError('required')) {
-          <mat-error>Land ist erforderlich</mat-error>
-        }
-      </mat-form-field>
 
 
       <div class="form-row">
@@ -108,6 +108,11 @@
           }
         </mat-form-field>
       </div>
+      @if (errorMessage) {
+        <mat-error class="error-message">
+          {{ errorMessage }}
+        </mat-error>
+      }
     </mat-card-content>
 
     <mat-card-actions>
