@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import {authGuard} from '../guards/auth.guard';
+
 
 export const categoriesRoutes: Routes = [
   {
@@ -8,5 +10,13 @@ export const categoriesRoutes: Routes = [
   {
     path: 'modify',
     loadComponent: () => import('./modify/modify.component').then(c => c.ModifyComponent),
+    canActivate: [authGuard],
+    data: { role: 'admin' },
+  },
+  {
+    path: 'create',
+    loadComponent: () => import('./create/create.component').then(c => c.CreateComponent),
+    canActivate: [authGuard],
+    data: { role: 'admin' },
   },
 ];
