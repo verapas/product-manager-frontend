@@ -4,7 +4,7 @@ import {jwtDecode} from 'jwt-decode';
 
 interface JwtPayload {
   exp: number;
-  role: string; // Benutzerrolle
+  roles: string[];
 }
 
 export const authGuard: CanActivateFn = (route, state) => {
@@ -28,9 +28,23 @@ export const authGuard: CanActivateFn = (route, state) => {
       return false;
     }
 
-    if (route.data?.['role'] === 'admin' && decoded.role !== 'admin') {
-      console.warn('Keine Admin-Berechtigung, Umleitung zur Produktübersicht.');
-      router.navigate(['/products']);
+    const isAdmin = decoded.roles?.includes('admin');
+
+    if (route.data?.['role'] === 'admin' && !isAdmin) {
+      console.warn('Keine Admin-Berechtigung.');
+
+      // Weiterleitung je nach Bereich
+      if (state.url.startsWith('/products')) {
+        console.warn('Umleitung zur Produktliste.');
+        router.navigate(['/products/list']);
+      } else if (state.url.startsWith('/categories')) {
+        console.warn('Umleitung zur Kategorieliste.');
+        router.navigate(['/categories/list']);
+      } else {
+        console.warn('Umleitung zur Startseite.');
+        router.navigate(['/']);
+      }
+
       return false;
     }
 

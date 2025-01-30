@@ -55,13 +55,13 @@ export class LoginComponent {
     }).subscribe({
       next: (response) => {
         if (response.token) {
-          //Bearer token ausgeben in der konsole
+
           console.log('Bearer Token:', response.token);
 
-          // Speichert den Token im local-Storage
+          // speichere den Token im localStorage
           localStorage.setItem('ACCESS_TOKEN', response.token);
 
-          // Weiterleitung zum Dashboard
+          // man gelang nach dem, Login beim Dashboard
           this.router.navigate(['/general-sites/dashboard']);
         } else {
           this.errorMessage = 'Token fehlt in der API-Antwort.';

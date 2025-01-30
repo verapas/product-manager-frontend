@@ -8,14 +8,14 @@ export const categoriesRoutes: Routes = [
     loadComponent: () => import('./list/list.component').then(c => c.ListComponent),
   },
   {
-    path: 'modify',
+    path: 'create',
     loadComponent: () => import('./modify/modify.component').then(c => c.ModifyComponent),
     canActivate: [authGuard],
     data: { role: 'admin' },
   },
   {
-    path: 'create',
-    loadComponent: () => import('./create/create.component').then(c => c.CreateComponent),
+    path: 'edit/:id',
+    loadComponent: () => import('./modify/modify.component').then(c => c.ModifyComponent),
     canActivate: [authGuard],
     data: { role: 'admin' },
   },

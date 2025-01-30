@@ -17,6 +17,6 @@ export const generalSitesRoutes: Routes = [
   {
     path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component').then(c => c.DashboardComponent),
-    canActivate: [authGuard], // Nur authentifizierte Benutzer dürfen ins Dashboard
+    canActivate: [authGuard], // aktuell können nur authentifizierte Benutzer /dashboard aufrufen.
   },
 ];
