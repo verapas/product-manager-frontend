@@ -1,1 +1,37 @@
-<p>list works!</p>
+<mat-card>
+  <h2>Kategorienliste</h2>
+
+  <table mat-table [dataSource]="categories()" class="mat-elevation-z8">
+
+    <!-- Name Spalte -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let category">
+        <a [routerLink]="['/categories', category.id]">{{ category.name }}</a>
+      </td>
+    </ng-container>
+
+    <!-- Aktiv-Status Spalte -->
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef> Aktiv </th>
+      <td mat-cell *matCellDef="let category"> {{ category.active === true ? 'Nein' : 'Ja' }} </td>
+    </ng-container>
+
+    <!-- Aktionen Spalte -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef> Aktionen </th>
+      <td mat-cell *matCellDef="let category">
+        <button mat-button color="primary" (click)="editCategory(category.id)">Bearbeiten</button>
+        <button mat-button color="warn" (click)="deleteCategory(category.id)">Löschen</button>
+        <button mat-button color="accent" [routerLink]="['/categories', category.id]">Details</button>
+      </td>
+    </ng-container>
+
+    <!-- Header- und Zeilen-Deklaration -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <button mat-raised-button color="primary" routerLink="/categories/create">Neue Kategorie erstellen</button>
+</mat-card>

@@ -6,6 +6,7 @@ import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {Router, RouterLink} from '@angular/router';
 import {UserControllerService} from '../../openapi-client';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'pm-login',
@@ -28,8 +29,8 @@ import {UserControllerService} from '../../openapi-client';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-
   userControllerService = inject(UserControllerService);
+  toastr = inject(ToastrService);
   router = inject(Router);
 
   errorMessage: string | null = null;
@@ -40,10 +41,11 @@ export class LoginComponent {
   });
 
   onSubmit() {
-    this.errorMessage = null; // Fehlermeldung zurücksetzen
+    this.errorMessage = null;
 
     if (this.loginFormGroup.invalid) {
       this.loginFormGroup.markAllAsTouched();
+      this.toastr.warning('Bitte fülle alle Felder korrekt aus.', 'Warnung');
       return;
     }
 
@@ -55,25 +57,27 @@ export class LoginComponent {
     }).subscribe({
       next: (response) => {
         if (response.token) {
-
           console.log('Bearer Token:', response.token);
 
-          // speichere den Token im localStorage
+          // Token im localStorage speichern
           localStorage.setItem('ACCESS_TOKEN', response.token);
 
-          // man gelang nach dem, Login beim Dashboard
+          // Erfolgsmeldung anzeigen
+          this.toastr.success('Login erfolgreich! Willkommen zurück.', 'Erfolg');
+
+          // Weiterleitung zum Dashboard
           this.router.navigate(['/general-sites/dashboard']);
         } else {
           this.errorMessage = 'Token fehlt in der API-Antwort.';
+          this.toastr.error(this.errorMessage, 'Fehler');
           console.error('Token fehlt in der Antwort:', response);
         }
       },
       error: (err) => {
         this.errorMessage = err.error?.message || 'Login fehlgeschlagen. Bitte überprüfen Sie Ihre Eingaben.';
+        this.toastr.error(this.errorMessage ?? 'Unbekannter Fehler', 'Fehler');
         console.error('Fehler beim Login:', err);
       }
     });
   }
-
-
 }

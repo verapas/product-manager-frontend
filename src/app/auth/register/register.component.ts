@@ -44,7 +44,7 @@ export class RegisterComponent {
     street: new FormControl('', [Validators.required]),
     zip: new FormControl('', [Validators.required, Validators.minLength(4), Validators.maxLength(10)]),
     city: new FormControl('', [Validators.required]),
-    country: new FormControl('', [Validators.required]),
+    country: new FormControl('', [Validators.required, Validators.maxLength(2)]),
     phone: new FormControl('', [Validators.maxLength(15)]),
     mobilePhone: new FormControl('', [Validators.maxLength(15)]),
     email: new FormControl('', [Validators.required, Validators.email]),

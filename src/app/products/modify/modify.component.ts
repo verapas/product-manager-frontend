@@ -10,6 +10,8 @@ import {
   ProductControllerService, ProductDetailDto,
 } from '../../openapi-client';
 import {ActivatedRoute, Router} from '@angular/router';
+import {MatCard} from '@angular/material/card';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'pm-modify',
@@ -22,6 +24,7 @@ import {ActivatedRoute, Router} from '@angular/router';
     MatSelect,
     MatOption,
     MatButton,
+    MatCard,
   ],
   templateUrl: './modify.component.html',
   styleUrls: ['./modify.component.scss'],
@@ -29,6 +32,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ModifyComponent implements OnInit {
   categoryService = inject(CategoryControllerService);
   productService = inject(ProductControllerService);
+  toastr = inject(ToastrService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
   categories = signal<Array<CategoryShowDto>>([]);
@@ -46,6 +50,7 @@ export class ModifyComponent implements OnInit {
 
   isEdit = false;
   productId: number | null = null;
+  pageTitle = 'Produkt Erstellen';
 
   ngOnInit() {
     this.categoryService.getAllCategories().subscribe((value) => {
@@ -56,8 +61,8 @@ export class ModifyComponent implements OnInit {
     if (id) {
       this.isEdit = true;
       this.productId = Number(id);
+      this.pageTitle = 'Produkt Bearbeiten';
 
-      // Produktdaten aus der API laden und Formular befüllen
       this.productService.getProductById(this.productId).subscribe({
         next: (product: ProductDetailDto) => {
           this.productFormGroup.patchValue({
@@ -72,7 +77,7 @@ export class ModifyComponent implements OnInit {
           });
         },
         error: () => {
-          console.error('Fehler beim Laden des Produkts');
+          this.toastr.error('Fehler beim Laden des Produkts!', 'Fehler');
         },
       });
     }
@@ -81,6 +86,7 @@ export class ModifyComponent implements OnInit {
   onSubmit() {
     if (this.productFormGroup.invalid) {
       this.productFormGroup.markAllAsTouched();
+      this.toastr.warning('Bitte alle erforderlichen Felder ausfüllen!', 'Warnung');
       return;
     }
 
@@ -99,24 +105,24 @@ export class ModifyComponent implements OnInit {
       // Update bestehendes Produkt
       this.productService.updateProductById(this.productId, formData).subscribe({
         next: () => {
-          alert('Produkt erfolgreich aktualisiert!');
+          this.toastr.success('Produkt erfolgreich aktualisiert!', 'Erfolg');
           this.router.navigate(['/products/list']);
         },
         error: (err) => {
           console.error('Fehler beim Aktualisieren:', err);
-          alert('Fehler beim Aktualisieren des Produkts.');
+          this.toastr.error('Fehler beim Aktualisieren des Produkts!', 'Fehler');
         },
       });
     } else {
       // Neues Produkt erstellen
       this.productService.createProduct(formData).subscribe({
         next: () => {
-          alert('Produkt erfolgreich erstellt!');
+          this.toastr.success('Produkt erfolgreich erstellt!', 'Erfolg');
           this.router.navigate(['/products/list']);
         },
         error: (err) => {
           console.error('Fehler beim Erstellen:', err);
-          alert('Fehler beim Erstellen des Produkts.');
+          this.toastr.error('Fehler beim Erstellen des Produkts!', 'Fehler');
         },
       });
     }

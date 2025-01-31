@@ -1,0 +1,19 @@
+<mat-card>
+  <h2>Kategorie-Details</h2>
+
+  @if (category) {
+    <mat-list>
+      <mat-list-item><strong>ID:</strong> {{ category.id }}</mat-list-item>
+      <mat-list-item><strong>Name:</strong> {{ category.name }}</mat-list-item>
+      <mat-list-item><strong>Aktiv:</strong> {{ category.active ? 'Ja' : 'Nein' }}</mat-list-item>
+    </mat-list>
+
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="router.navigate(['/categories/list'])">
+        Zurück zur Liste
+      </button>
+    </mat-card-actions>
+  } @else {
+    <p>Kategorie nicht gefunden.</p>
+  }
+</mat-card>

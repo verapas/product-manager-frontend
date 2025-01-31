@@ -14,11 +14,6 @@
       margin-bottom: 16px;
     }
 
-    .form-row {
-      display: flex;
-      gap: 16px;
-    }
-
     mat-card-header {
       padding-top: 0;
       padding-bottom: 15px;
@@ -31,6 +26,13 @@
     mat-card-actions {
       display: flex;
       justify-content: space-between;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      width: 100%;
     }
   }
 }

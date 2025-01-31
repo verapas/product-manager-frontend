@@ -6,6 +6,8 @@ import { MatInput } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import { CategoryControllerService, CategoryShowDto } from '../../openapi-client';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {MatCard} from '@angular/material/card';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'pm-category-modify',
@@ -19,12 +21,14 @@ import {MatOption, MatSelect} from '@angular/material/select';
     MatButton,
     MatSelect,
     MatOption,
+    MatCard,
   ],
   templateUrl: './modify.component.html',
   styleUrls: ['./modify.component.scss'],
 })
 export class ModifyComponent implements OnInit {
   categoryService = inject(CategoryControllerService);
+  toastr = inject(ToastrService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
 
@@ -40,13 +44,14 @@ export class ModifyComponent implements OnInit {
     const id = this.activatedRoute.snapshot.params['id'];
     if (id) {
       this.isEdit = true;
-      this.categoryService.getCategoryById(id).subscribe({
+      this.categoryId = Number(id);
+
+      this.categoryService.getCategoryById(this.categoryId).subscribe({
         next: (category: CategoryShowDto) => {
           this.categoryForm.patchValue(category);
-          this.categoryId = category.id;
         },
         error: () => {
-          console.error('Fehler beim Laden der Kategorie');
+          this.toastr.error('Fehler beim Laden der Kategorie!', 'Fehler');
         },
       });
     }
@@ -55,9 +60,9 @@ export class ModifyComponent implements OnInit {
   onSubmit() {
     if (this.categoryForm.invalid) {
       this.categoryForm.markAllAsTouched();
+      this.toastr.warning('Bitte alle erforderlichen Felder ausfüllen!', 'Warnung');
       return;
     }
-
 
     const categoryData = {
       name: this.categoryForm.value.name ?? '',
@@ -65,27 +70,25 @@ export class ModifyComponent implements OnInit {
     };
 
     if (this.isEdit && this.categoryId) {
-
       this.categoryService.updateCategoryById(this.categoryId, categoryData).subscribe({
         next: () => {
-          alert('Kategorie erfolgreich aktualisiert!');
+          this.toastr.success('Kategorie erfolgreich aktualisiert!', 'Erfolg');
           this.router.navigate(['/categories/list']);
         },
         error: (err) => {
           console.error('Fehler beim Aktualisieren:', err);
-          alert('Fehler beim Aktualisieren der Kategorie.');
+          this.toastr.error('Fehler beim Aktualisieren der Kategorie!', 'Fehler');
         },
       });
     } else {
-
       this.categoryService.createCategory(categoryData).subscribe({
         next: () => {
-          alert('Kategorie erfolgreich erstellt!');
+          this.toastr.success('Kategorie erfolgreich erstellt!', 'Erfolg');
           this.router.navigate(['/categories/list']);
         },
         error: (err) => {
           console.error('Fehler beim Erstellen:', err);
-          alert('Fehler beim Erstellen der Kategorie.');
+          this.toastr.error('Fehler beim Erstellen der Kategorie!', 'Fehler');
         },
       });
     }

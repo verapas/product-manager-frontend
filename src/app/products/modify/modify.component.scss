@@ -1,5 +1,30 @@
-.form{
+mat-card {
+  width: 600px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+  margin: 30px;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    width: 100%;
+  }
+
+  h2 {
+    color: #f8f9fa;
+  }
+
+  mat-form-field {
+    flex: 1;
+    width: 100%;
+  }
 }

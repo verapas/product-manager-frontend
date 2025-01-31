@@ -1,43 +1,37 @@
-<div>
-  <h2>Produkt Erstellen / Bearbeiten</h2>
+<mat-card>
+  <h2>{{ pageTitle }}</h2>
   <div class="form">
 
-    <!-- SKU -->
-    <mat-form-field>
-      <mat-label>SKU</mat-label>
-      <input matInput [formControl]="productFormGroup.controls.sku" placeholder="Produkt SKU">
-      @if (productFormGroup.controls.sku.touched && productFormGroup.controls.sku.invalid) {
-        @if (productFormGroup.controls.sku.hasError('required')) {
-          <mat-error>SKU ist ein Pflichtfeld</mat-error>
-        }
-        @if (productFormGroup.controls.sku.hasError('minlength')) {
-          <mat-error>SKU muss mindestens 3 Zeichen lang sein</mat-error>
-        }
-      }
-    </mat-form-field>
+    <div class="form-row">
 
-    <!-- Name -->
-    <mat-form-field>
-      <mat-label>Produktname</mat-label>
-      <input matInput [formControl]="productFormGroup.controls.name" placeholder="Produktname">
-      @if (productFormGroup.controls.name.touched && productFormGroup.controls.name.invalid) {
-        @if (productFormGroup.controls.name.hasError('required')) {
-          <mat-error>Produktname ist ein Pflichtfeld</mat-error>
+      <!-- Name -->
+      <mat-form-field>
+        <mat-label>Produktname</mat-label>
+        <input matInput [formControl]="productFormGroup.controls.name" placeholder="Produktname">
+        @if (productFormGroup.controls.name.touched && productFormGroup.controls.name.invalid) {
+          @if (productFormGroup.controls.name.hasError('required')) {
+            <mat-error>Produktname ist ein Pflichtfeld</mat-error>
+          }
+          @if (productFormGroup.controls.name.hasError('minlength')) {
+            <mat-error>Produktname muss mindestens 3 Zeichen lang sein</mat-error>
+          }
         }
-        @if (productFormGroup.controls.name.hasError('minlength')) {
-          <mat-error>Produktname muss mindestens 3 Zeichen lang sein</mat-error>
-        }
-      }
-    </mat-form-field>
+      </mat-form-field>
 
-    <!-- Image -->
-    <mat-form-field>
-      <mat-label>Produktbild-URL</mat-label>
-      <input matInput [formControl]="productFormGroup.controls.image" placeholder="Bild-URL">
-      @if (productFormGroup.controls.image.touched && productFormGroup.controls.image.invalid) {
-        <mat-error>Bild-URL ist ein Pflichtfeld</mat-error>
-      }
-    </mat-form-field>
+      <!-- SKU -->
+      <mat-form-field>
+        <mat-label>SKU</mat-label>
+        <input matInput [formControl]="productFormGroup.controls.sku" placeholder="Produkt SKU">
+        @if (productFormGroup.controls.sku.touched && productFormGroup.controls.sku.invalid) {
+          @if (productFormGroup.controls.sku.hasError('required')) {
+            <mat-error>SKU ist ein Pflichtfeld</mat-error>
+          }
+          @if (productFormGroup.controls.sku.hasError('minlength')) {
+            <mat-error>SKU muss mindestens 3 Zeichen lang sein</mat-error>
+          }
+        }
+      </mat-form-field>
+    </div>
 
     <!-- Beschreibung -->
     <mat-form-field>
@@ -53,57 +47,74 @@
       }
     </mat-form-field>
 
+
+    <!-- Image -->
+    <mat-form-field>
+      <mat-label>Produktbild-URL</mat-label>
+      <input matInput [formControl]="productFormGroup.controls.image" placeholder="Bild-URL">
+      @if (productFormGroup.controls.image.touched && productFormGroup.controls.image.invalid) {
+        <mat-error>Bild-URL ist ein Pflichtfeld</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field>
+        <mat-label>Preis</mat-label>
+        <input matInput type="number" [formControl]="productFormGroup.controls.price" placeholder="Preis">
+        @if (productFormGroup.controls.price.touched && productFormGroup.controls.price.invalid) {
+          @if (productFormGroup.controls.price.hasError('required')) {
+            <mat-error>Preis ist ein Pflichtfeld</mat-error>
+          }
+          @if (productFormGroup.controls.price.hasError('min')) {
+            <mat-error>Preis muss mindestens 0,01 betragen</mat-error>
+          }
+        }
+      </mat-form-field>
+
+      <!-- Lagerbestand -->
+      <mat-form-field>
+        <mat-label>Lagerbestand</mat-label>
+        <input matInput type="number" [formControl]="productFormGroup.controls.stock" placeholder="Lagerbestand">
+        @if (productFormGroup.controls.stock.touched && productFormGroup.controls.stock.invalid) {
+          @if (productFormGroup.controls.stock.hasError('required')) {
+            <mat-error>Lagerbestand ist ein Pflichtfeld</mat-error>
+          }
+          @if (productFormGroup.controls.stock.hasError('min')) {
+            <mat-error>Lagerbestand darf nicht negativ sein</mat-error>
+          }
+        }
+      </mat-form-field>
+    </div>
+
     <!-- Preis -->
-    <mat-form-field>
-      <mat-label>Preis</mat-label>
-      <input matInput type="number" [formControl]="productFormGroup.controls.price" placeholder="Preis">
-      @if (productFormGroup.controls.price.touched && productFormGroup.controls.price.invalid) {
-        @if (productFormGroup.controls.price.hasError('required')) {
-          <mat-error>Preis ist ein Pflichtfeld</mat-error>
-        }
-        @if (productFormGroup.controls.price.hasError('min')) {
-          <mat-error>Preis muss mindestens 0,01 betragen</mat-error>
-        }
-      }
-    </mat-form-field>
 
-    <!-- Lagerbestand -->
-    <mat-form-field>
-      <mat-label>Lagerbestand</mat-label>
-      <input matInput type="number" [formControl]="productFormGroup.controls.stock" placeholder="Lagerbestand">
-      @if (productFormGroup.controls.stock.touched && productFormGroup.controls.stock.invalid) {
-        @if (productFormGroup.controls.stock.hasError('required')) {
-          <mat-error>Lagerbestand ist ein Pflichtfeld</mat-error>
+    <div class="form-row">
+      <!-- Kategorie -->
+      <mat-form-field>
+        <mat-label>Kategorie auswählen</mat-label>
+        <mat-select [formControl]="productFormGroup.controls.category">
+          @for (category of categories(); track category.id) {
+            <mat-option [value]="category.id">{{ category.name }}</mat-option>
+          }
+        </mat-select>
+        @if (productFormGroup.controls.category.touched && productFormGroup.controls.category.invalid) {
+          <mat-error>Kategorie ist ein Pflichtfeld</mat-error>
         }
-        @if (productFormGroup.controls.stock.hasError('min')) {
-          <mat-error>Lagerbestand darf nicht negativ sein</mat-error>
-        }
-      }
-    </mat-form-field>
+      </mat-form-field>
 
-    <!-- Kategorie -->
-    <mat-form-field>
-      <mat-label>Kategorie auswählen</mat-label>
-      <mat-select [formControl]="productFormGroup.controls.category">
-        @for (category of categories(); track category.id) {
-          <mat-option [value]="category.id">{{ category.name }}</mat-option>
-        }
-      </mat-select>
-      @if (productFormGroup.controls.category.touched && productFormGroup.controls.category.invalid) {
-        <mat-error>Kategorie ist ein Pflichtfeld</mat-error>
-      }
-    </mat-form-field>
+      <!-- Aktiv -->
+      <mat-form-field>
+        <mat-label>Aktiv</mat-label>
+        <mat-select [formControl]="productFormGroup.controls.active">
+          <mat-option [value]="true">Ja</mat-option>
+          <mat-option [value]="false">Nein</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-    <!-- Aktiv -->
-    <mat-form-field>
-      <mat-label>Aktiv</mat-label>
-      <mat-select [formControl]="productFormGroup.controls.active">
-        <mat-option [value]="true">Ja</mat-option>
-        <mat-option [value]="false">Nein</mat-option>
-      </mat-select>
-    </mat-form-field>
 
     <!-- Submit -->
     <button mat-raised-button color="primary" (click)="onSubmit()">Speichern</button>
+
   </div>
-</div>
+</mat-card>

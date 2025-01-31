@@ -19,4 +19,8 @@ export const categoriesRoutes: Routes = [
     canActivate: [authGuard],
     data: { role: 'admin' },
   },
+  {
+    path: ':id',
+    loadComponent: () => import('./detail/detail.component').then(c => c.DetailComponent)
+  }
 ];

@@ -51,7 +51,7 @@
 
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Land</mat-label>
-          <input matInput formControlName="country" placeholder="Geben Sie Ihr Land ein" />
+          <input matInput formControlName="country" placeholder="Geben Sie Ihr Länderkürzel ein" />
           @if (registerFormGroup.get('country')?.hasError('required')) {
             <mat-error>Land ist erforderlich</mat-error>
           }

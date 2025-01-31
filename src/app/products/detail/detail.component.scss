@@ -1,0 +1,31 @@
+mat-card {
+  padding: 20px;
+  margin: 30px auto;
+  max-width: 600px;
+  text-align: left;
+}
+
+h2 {
+  color: #f8f9fa;
+  margin-bottom: 16px;
+}
+
+mat-list-item {
+  font-size: 16px;
+  color: #f8f9fa;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 0;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}

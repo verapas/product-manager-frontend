@@ -1,37 +1,37 @@
-<div>
+<mat-card>
   <h2>@if (isEdit) { Kategorie bearbeiten } @else { Neue Kategorie erstellen }</h2>
 
   <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    <!-- Name -->
-    <mat-form-field>
-      <mat-label>Kategoriename</mat-label>
-      <input matInput formControlName="name" placeholder="Kategoriename eingeben">
-      @if (categoryForm.controls.name.touched && categoryForm.controls.name.invalid) {
-        @if (categoryForm.controls.name.hasError('required')) {
-          <mat-error>Kategoriename ist ein Pflichtfeld</mat-error>
+    <div class="form">
+      <!-- Name -->
+      <mat-form-field>
+        <mat-label>Kategoriename</mat-label>
+        <input matInput formControlName="name" placeholder="Kategoriename eingeben">
+        @if (categoryForm.controls.name.touched && categoryForm.controls.name.invalid) {
+          @if (categoryForm.controls.name.hasError('required')) {
+            <mat-error>Kategoriename ist ein Pflichtfeld</mat-error>
+          }
+          @if (categoryForm.controls.name.hasError('minlength')) {
+            <mat-error>Kategoriename muss mindestens 3 Zeichen lang sein</mat-error>
+          }
         }
-        @if (categoryForm.controls.name.hasError('minlength')) {
-          <mat-error>Kategoriename muss mindestens 3 Zeichen lang sein</mat-error>
-        }
-      }
-    </mat-form-field>
+      </mat-form-field>
 
-    <!-- Aktiv-Status -->
-    <mat-form-field>
-      <mat-label>Aktiv</mat-label>
-      <mat-select formControlName="active">
-        <mat-option [value]="true">Ja</mat-option>
-        <mat-option [value]="false">Nein</mat-option>
-      </mat-select>
-    </mat-form-field>
+      <!-- Aktiv-Status -->
+      <mat-form-field>
+        <mat-label>Aktiv</mat-label>
+        <mat-select formControlName="active">
+          <mat-option [value]="true">Ja</mat-option>
+          <mat-option [value]="false">Nein</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <!-- Buttons -->
-    <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid">
-      @if (isEdit) { Speichern } @else { Erstellen }
-    </button>
+      <!-- Buttons -->
+      <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid">
+        @if (isEdit) { Speichern } @else { Erstellen }
+      </button>
 
-    <button mat-button color="warn" type="button" (click)="router.navigate(['/categories/list'])">
-      Abbrechen
-    </button>
+    </div>
   </form>
-</div>
+
+</mat-card>

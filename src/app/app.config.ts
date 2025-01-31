@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {ApiModule, Configuration} from './openapi-client';
 import {authorizationInterceptor} from './interceptors/authorization.interceptor';
+import {provideToastr} from 'ngx-toastr';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([authorizationInterceptor])
     ),
+    provideToastr(),
     importProvidersFrom(
       ApiModule.forRoot(() => {
         return new Configuration({
