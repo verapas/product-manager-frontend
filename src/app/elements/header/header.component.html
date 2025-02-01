@@ -16,4 +16,8 @@
     <button mat-menu-item routerLink="/categories/create">Kategorie erstellen</button>
   </mat-menu>
 
+  @if (isAdmin()) {
+    <button mat-button routerLink="/users/list">Benutzerverwaltung</button>
+  }
+
 </mat-toolbar>

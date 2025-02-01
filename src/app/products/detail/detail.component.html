@@ -5,19 +5,19 @@
     <mat-list>
       <mat-list-item><strong>ID:</strong> {{ product.id }}</mat-list-item>
       <mat-list-item><strong>Name:</strong> {{ product.name }}</mat-list-item>
-      <mat-list-item><strong>Beschreibung:</strong>{{ product.description }}</mat-list-item>
+      <mat-list-item><strong>Beschreibung:</strong> {{ product.description }}</mat-list-item>
       <mat-list-item><strong>SKU:</strong> {{ product.sku }}</mat-list-item>
       <mat-list-item><strong>Preis:</strong> {{ product.price | currency }}</mat-list-item>
       <mat-list-item><strong>Bestand:</strong> {{ product.stock }}</mat-list-item>
       <mat-list-item><strong>Aktiv:</strong> {{ product.active ? 'Ja' : 'Nein' }}</mat-list-item>
-
-      @if (product.image) {
-        <mat-list-item>
-          <strong>Bild:</strong>
-          <img [src]="product.image" alt="Produktbild">
-        </mat-list-item>
-      }
     </mat-list>
+
+    @if (product.image) {
+      <div class="product-image-container">
+        <strong>Bild:</strong>
+        <img [src]="product.image" alt="Produktbild">
+      </div>
+    }
 
     <mat-card-actions>
       <button mat-raised-button color="primary" (click)="router.navigate(['/products/list'])">

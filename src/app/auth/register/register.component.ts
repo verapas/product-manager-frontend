@@ -11,7 +11,6 @@ import { MatButton } from '@angular/material/button';
 import { MatInput } from '@angular/material/input';
 import {Router, RouterLink} from '@angular/router';
 import {UserControllerService} from '../../openapi-client';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'pm-register',

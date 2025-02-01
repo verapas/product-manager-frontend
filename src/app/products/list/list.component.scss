@@ -4,18 +4,51 @@ mat-card {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 90vw; // Verhindert, dass die Karte über den Bildschirmrand hinausgeht
+  overflow-x: auto; // Falls die Tabelle zu breit ist, wird gescrollt
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin: 10px;
+  }
 }
 
 h2 {
   text-align: center;
   color: #f8f9fa;
+  font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 }
 
 table {
   width: 100%;
   margin-bottom: 20px;
+  border-collapse: collapse;
+  overflow-x: auto;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 }
 
 button {
   margin: 5px;
+  font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
 }
