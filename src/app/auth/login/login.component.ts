@@ -8,6 +8,11 @@ import {Router, RouterLink} from '@angular/router';
 import {UserControllerService} from '../../openapi-client';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * @component LoginComponent
+ * @description Ermöglicht es Benutzern, sich in die Anwendung einzuloggen.
+ * Beim erfolgreichen Login wird ein JWT-Token gespeichert und der Benutzer weitergeleitet.
+ */
 @Component({
   selector: 'pm-login',
   imports: [
@@ -42,7 +47,12 @@ export class LoginComponent {
 
 
 
-  // Login Formular absenden
+  /**
+   * @method onSubmit
+   * @description Verarbeitet das Absenden des Login-Formulars.
+   * Prüft, ob das Formular valide ist, sendet eine Login-Anfrage an das Backend
+   * und speichert das JWT-Token bei Erfolg.
+   */
   onSubmit() {
     this.errorMessage = null;
 

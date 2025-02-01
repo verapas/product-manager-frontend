@@ -7,6 +7,11 @@ import {MatCard, MatCardActions} from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
 import {MatList, MatListItem} from '@angular/material/list';
 
+/**
+ * @component DetailComponent
+ * @description Zeigt die Details eines Produkts basierend auf der übergebenen ID.
+ * Falls das Produkt nicht gefunden wird, erfolgt eine Weiterleitung zur Produktliste.
+ */
 @Component({
   selector: 'pm-detail',
   imports: [
@@ -28,7 +33,12 @@ export class DetailComponent implements OnInit {
 
   product: ProductDetailDto | null = null;
 
-  // Beim Laden der Seite Produktdetails abrufen
+  /**
+   * @method ngOnInit
+   * @description Wird beim Laden der Seite ausgeführt.
+   * Ruft die Produktdetails anhand der ID aus der URL ab.
+   * Falls das Produkt nicht existiert, wird der Benutzer zur Produktliste umgeleitet.
+   */
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
 

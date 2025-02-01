@@ -12,6 +12,12 @@ import { MatInput } from '@angular/material/input';
 import {Router, RouterLink} from '@angular/router';
 import {UserControllerService} from '../../openapi-client';
 
+/**
+ * @component RegisterComponent
+ * @description Ermöglicht es neuen Benutzern, sich zu registrieren.
+ * Der Registrierungsprozess verwendet den Endpoint `registerWithoutAdminRights`,
+ * um sicherzustellen, dass neue Benutzer keine Admin-Rechte erhalten.
+ */
 @Component({
   selector: 'pm-register',
   standalone: true,
@@ -55,7 +61,12 @@ export class RegisterComponent {
     confirmPassword: new FormControl('', [Validators.required]),
   }, { validators: this.passwordMatchValidator });
 
-  // Prüft, ob die Passwörter übereinstimmen.
+  /**
+   * @method passwordMatchValidator
+   * @description Prüft, ob die Passwörter übereinstimmen.
+   * @param control Das Formularsteuerungselement
+   * @returns `null`, wenn die Passwörter übereinstimmen, sonst ein Fehlerobjekt `{ passwordsDoNotMatch: true }`
+   */
   passwordMatchValidator(control: AbstractControl): Validators | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -64,7 +75,12 @@ export class RegisterComponent {
       : null;
   }
 
-  // Sendet das Registrierungsformular ab und nutzt den Endpoint um einen Benutzer zu erstellen ohne Admin-Rechte
+  /**
+   * @method onSubmit
+   * @description Verarbeitet das Absenden des Registrierungsformulars.
+   * Prüft, ob das Formular valide ist, sendet eine Registrierungsanfrage an das Backend
+   * und leitet den Benutzer nach erfolgreicher Registrierung zur Login-Seite weiter.
+   */
   onSubmit() {
     this.errorMessage = null; // Fehlermeldung zurücksetzen
     this.registerFormGroup.markAllAsTouched();

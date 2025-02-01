@@ -5,6 +5,10 @@ import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {Router, RouterLink} from '@angular/router';
 import {jwtDecode} from 'jwt-decode';
 
+/**
+ * @component HeaderComponent
+ * @description Stellt die Navigationsleiste bereit und prüft, ob der Benutzer Adminrechte hat.
+ */
 @Component({
   selector: 'pm-header',
   imports: [
@@ -23,12 +27,19 @@ export class HeaderComponent implements OnInit {
   router = inject(Router);
   isAdmin = signal<boolean>(false);
 
-  // Beim Laden des Headers prüfen, ob der Benutzer Admin ist
+  /**
+   * @method ngOnInit
+   * @description Wird beim Laden des Headers ausgeführt und prüft, ob der Benutzer Adminrechte hat.
+   */
   ngOnInit() {
     this.checkAdminStatus();
   }
 
-  // Prüft den Admin-Status basierend auf dem JWT-Token
+  /**
+   * @method checkAdminStatus
+   * @description Prüft den Admin-Status anhand des JWT-Tokens im LocalStorage.
+   * Falls das Token gültig ist und der Benutzer Adminrechte hat, wird `isAdmin` gesetzt.
+   */
   checkAdminStatus() {
     const token = localStorage.getItem('ACCESS_TOKEN');
 

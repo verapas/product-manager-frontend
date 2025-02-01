@@ -2,6 +2,11 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'general-sites/dashboard'
+  },
+  {
     path: 'auth',
     loadChildren: () => import('./auth/auth.routes').then(m => m.authRoutes),
   },

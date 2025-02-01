@@ -7,6 +7,15 @@ interface JwtPayload {
   roles?: string[];
 }
 
+/**
+ * @function authGuard
+ * @description Überprüft, ob der Benutzer authentifiziert ist und ggf. Adminrechte hat.
+ * Falls das Token abgelaufen oder nicht vorhanden ist, wird zur Login-Seite weitergeleitet.
+ * Falls ein Admin-Bereich betreten wird, wird geprüft, ob der Benutzer Adminrechte hat.
+ * @param route Die aktuelle Route, die aufgerufen wird.
+ * @param state Der aktuelle RouterStateSnapshot.
+ * @returns `true`, wenn der Benutzer Zugriff hat, sonst `false` (Umleitung zur entsprechenden Seite).
+ */
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = localStorage.getItem('ACCESS_TOKEN');

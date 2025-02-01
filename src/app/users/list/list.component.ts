@@ -14,6 +14,10 @@ import {
 } from '@angular/material/table';
 import {MatButton} from '@angular/material/button';
 
+/**
+ * @component ListComponent
+ * @description Zeigt eine Liste aller Benutzer und ermöglicht die Beförderung von Benutzern zu Administratoren.
+ */
 @Component({
   selector: 'pm-list',
   imports: [
@@ -41,12 +45,18 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['email', 'isAdmin', 'actions'];
 
-  // Lädt die Benutzerliste beim Start der Komponente
+  /**
+   * @method ngOnInit
+   * @description Wird beim Laden der Komponente aufgerufen und ruft die Benutzerliste ab.
+   */
   ngOnInit() {
     this.loadUsers();
   }
 
-  // Holt alle Benutzer aus der API und speichert sie im Signal
+  /**
+   * @method loadUsers
+   * @description Ruft alle Benutzer aus der API ab und speichert sie in `users`.
+   */
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (userList) => {
@@ -59,7 +69,11 @@ export class ListComponent implements OnInit {
     });
   }
 
-  // Befördert einen Benutzer zum Admin nach Bestätigung
+  /**
+   * @method promoteToAdmin
+   * @description Befördert einen Benutzer nach Bestätigung zum Administrator.
+   * @param userId Die ID des Benutzers, der befördert werden soll.
+   */
   promoteToAdmin(userId: number) {
     if (confirm('Möchtest du diesen Benutzer wirklich zum Admin befördern?')) {
       this.userService.promoteUser(userId).subscribe({

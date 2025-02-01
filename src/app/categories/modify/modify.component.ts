@@ -9,6 +9,10 @@ import {MatOption, MatSelect} from '@angular/material/select';
 import {MatCard} from '@angular/material/card';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * @component ModifyComponent
+ * @description Ermöglicht das Erstellen und Bearbeiten von Kategorien.
+ */
 @Component({
   selector: 'pm-category-modify',
   standalone: true,
@@ -41,7 +45,10 @@ export class ModifyComponent implements OnInit {
   categoryId: number | null = null;
 
 
-  // Prüft, ob eine ID in der URL vorhanden ist (Bearbeitungsmodus) und lädt die Kategorie
+  /**
+   * @method ngOnInit
+   * @description Prüft, ob eine ID in der URL vorhanden ist (Bearbeitungsmodus) und lädt die Kategorie.
+   */
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     if (id) {
@@ -59,7 +66,10 @@ export class ModifyComponent implements OnInit {
     }
   }
 
-  // Speichert eine neue oder aktualisierte Kategorie
+  /**
+   * @method onSubmit
+   * @description Speichert eine neue oder aktualisierte Kategorie.
+   */
   onSubmit() {
     if (this.categoryForm.invalid) {
       this.categoryForm.markAllAsTouched();

@@ -11,6 +11,10 @@ interface JwtPayload {
   roles?: string[];
 }
 
+/**
+ * @component DashboardComponent
+ * @description Zeigt das Dashboard an und überprüft, ob der Benutzer eingeloggt ist und Adminrechte hat.
+ */
 @Component({
   selector: 'pm-dashboard',
   imports: [
@@ -29,7 +33,12 @@ export class DashboardComponent implements OnInit {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
-  // Beim Laden des Dashboards prüfen, ob der Benutzer eingeloggt ist und Admin-Rechte hat
+  /**
+   * @method ngOnInit
+   * @description Wird beim Laden des Dashboards ausgeführt.
+   * Prüft, ob der Benutzer eingeloggt ist und ob er Adminrechte hat.
+   * Falls der Benutzer authentifiziert ist, werden seine Benutzerdaten geladen.
+   */
   ngOnInit() {
     const token = localStorage.getItem('ACCESS_TOKEN');
 
@@ -70,7 +79,10 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  // Benutzer abmelden und zur Login-Seite weiterleiten
+  /**
+   * @method logout
+   * @description Meldet den Benutzer ab, löscht den Token und leitet zur Login-Seite weiter.
+   */
   logout() {
     console.log('Benutzer meldet sich ab...');
     localStorage.removeItem('ACCESS_TOKEN');
