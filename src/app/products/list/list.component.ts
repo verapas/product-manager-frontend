@@ -42,12 +42,14 @@ export class ListComponent implements OnInit {
   router = inject(Router);
   products = signal<Array<ProductShowDto>>([]);
 
-  displayedColumns: string[] = ['sku', 'name', 'price', 'stock', 'actions'];
+  displayedColumns: string[] = ['name', 'price', 'stock', 'actions'];
 
+  // Lädt die Produktliste beim Start der Komponente
   ngOnInit() {
     this.loadProducts();
   }
 
+  // Holt alle Produkte aus der API und speichert sie im Signal
   loadProducts() {
     this.productService.getAllProducts().subscribe({
       next: (productList) => {
@@ -60,10 +62,12 @@ export class ListComponent implements OnInit {
     });
   }
 
+  // Weiterleitung zur Bearbeitungsseite eines Produkts
   editProduct(productId: number) {
     this.router.navigate(['/products/edit', productId]);
   }
 
+  // Löscht ein Produkt nach Bestätigung und lädt die Liste neu
   deleteProduct(productId: number) {
     if (confirm('Möchtest du dieses Produkt wirklich löschen?')) {
       this.productService.deleteProductById(productId).subscribe({

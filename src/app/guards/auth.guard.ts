@@ -1,15 +1,20 @@
-import {CanActivateFn, Router} from '@angular/router';
-import {inject} from '@angular/core';
-import {jwtDecode} from 'jwt-decode';
+import { CanActivateFn, Router } from '@angular/router';
+import { inject } from '@angular/core';
+import { jwtDecode } from 'jwt-decode';
 
 interface JwtPayload {
   exp: number;
-  roles: string[];
+  roles?: string[];
 }
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const token = localStorage.getItem('ACCESS_TOKEN');
+
+
+  if (state.url === '/dashboard') {
+    return true;
+  }
 
   if (!token) {
     console.warn('Kein Token gefunden, Umleitung zur Login-Seite.');
@@ -33,15 +38,11 @@ export const authGuard: CanActivateFn = (route, state) => {
     if (route.data?.['role'] === 'admin' && !isAdmin) {
       console.warn('Keine Admin-Berechtigung.');
 
-      // Weiterleitung je nach Bereich
       if (state.url.startsWith('/products')) {
-        console.warn('Umleitung zur Produktliste.');
         router.navigate(['/products/list']);
       } else if (state.url.startsWith('/categories')) {
-        console.warn('Umleitung zur Kategorieliste.');
         router.navigate(['/categories/list']);
       } else {
-        console.warn('Umleitung zur Startseite.');
         router.navigate(['/']);
       }
 

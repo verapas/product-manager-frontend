@@ -1,5 +1,31 @@
-<div class="dashboard-container">
-  <h1>Willkommen, {{ fullName }}!</h1>
-  <p>Dies ist Ihr Dashboard.</p>
-  <button mat-raised-button color="primary" (click)="logout()">Abmelden</button>
-</div>
+<mat-card>
+  @if (isLoggedIn) {
+    <h1>Willkommen, {{ fullName }}!</h1>
+    <p>Schön, dass du wieder da bist.</p>
+
+    <div class="dashboard-actions">
+      <button mat-raised-button color="warn" (click)="logout()">Abmelden</button>
+
+      @if (isAdmin) {
+        <h2>Admin-Bereich</h2>
+        <button mat-raised-button color="primary" routerLink="/products/create">Produkte erstellen</button>
+        <button mat-raised-button color="accent" routerLink="/categories/create">Kategorien erstellen</button>
+        <button mat-raised-button color="warn" routerLink="/users/list">Benutzerverwaltung</button>
+      } @else if (!isAdmin){
+        <h2>Bereich ohne Admin-Rechte</h2>
+        <button mat-raised-button color="primary" routerLink="/products/list">Alle Produkte</button>
+        <button mat-raised-button color="accent" routerLink="/categories/list">Alle Kategorien</button>
+      }
+    </div>
+  } @else {
+    <h1>Du bist nicht angemeldet!</h1>
+    <p>Um alle Funktionen nutzen zu können, melden dich bitte an.</p>
+
+    <button mat-raised-button color="primary" routerLink="/auth/login">Jetzt einloggen</button>
+
+    <h2>Erreichbare Seiten</h2>
+    <p>Auch ohne Anmeldung können Sie folgende Seiten besuchen:</p>
+    <button mat-raised-button color="accent" routerLink="/products/list">Produktübersicht</button>
+    <button mat-raised-button color="accent" routerLink="/categories/list">Kategorienübersicht</button>
+  }
+</mat-card>

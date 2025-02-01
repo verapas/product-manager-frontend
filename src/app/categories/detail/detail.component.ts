@@ -26,6 +26,7 @@ export class DetailComponent implements OnInit {
 
   category: CategoryDetailDto | null = null;
 
+  // Lädt die Kategorie beim aufruf der Detailseite
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
 

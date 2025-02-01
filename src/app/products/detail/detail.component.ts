@@ -28,6 +28,7 @@ export class DetailComponent implements OnInit {
 
   product: ProductDetailDto | null = null;
 
+  // Beim Laden der Seite Produktdetails abrufen
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
 

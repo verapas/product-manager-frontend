@@ -1,11 +1,32 @@
-.dashboard-container {
+mat-card {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
   text-align: center;
-  margin-top: 50px;
+  color: white;
 }
-h1 {
-  font-size: 2rem;
+
+.dashboard-container h1 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #f8f9fa;
 }
-p {
-  margin: 20px 0;
-  font-size: 1.2rem;
+
+.dashboard-container p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #d1d5db;
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  width: 100%;
+  margin-bottom: 20px;
 }

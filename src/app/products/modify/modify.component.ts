@@ -52,6 +52,7 @@ export class ModifyComponent implements OnInit {
   productId: number | null = null;
   pageTitle = 'Produkt Erstellen';
 
+  // Lädt Kategorien und prüft, ob ein Produkt bearbeitet wird
   ngOnInit() {
     this.categoryService.getAllCategories().subscribe((value) => {
       this.categories.set(value);
@@ -63,6 +64,7 @@ export class ModifyComponent implements OnInit {
       this.productId = Number(id);
       this.pageTitle = 'Produkt Bearbeiten';
 
+      // Produktdaten abrufen und ins Formular laden
       this.productService.getProductById(this.productId).subscribe({
         next: (product: ProductDetailDto) => {
           this.productFormGroup.patchValue({
@@ -83,6 +85,7 @@ export class ModifyComponent implements OnInit {
     }
   }
 
+  // Erstellt oder aktualisiert ein Produkt je nach Bearbeitungsmodus
   onSubmit() {
     if (this.productFormGroup.invalid) {
       this.productFormGroup.markAllAsTouched();

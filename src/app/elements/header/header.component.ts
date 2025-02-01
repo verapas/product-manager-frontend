@@ -23,10 +23,12 @@ export class HeaderComponent implements OnInit {
   router = inject(Router);
   isAdmin = signal<boolean>(false);
 
+  // Beim Laden des Headers prüfen, ob der Benutzer Admin ist
   ngOnInit() {
     this.checkAdminStatus();
   }
 
+  // Prüft den Admin-Status basierend auf dem JWT-Token
   checkAdminStatus() {
     const token = localStorage.getItem('ACCESS_TOKEN');
 

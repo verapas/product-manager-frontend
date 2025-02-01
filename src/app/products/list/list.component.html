@@ -3,11 +3,7 @@
 
   <table mat-table [dataSource]="products()" class="mat-elevation-z8">
 
-    <!-- SKU Spalte -->
-    <ng-container matColumnDef="sku">
-      <th mat-header-cell *matHeaderCellDef> SKU </th>
-      <td mat-cell *matCellDef="let product"> {{ product.sku }} </td>
-    </ng-container>
+
 
     <!-- Name Spalte -->
     <ng-container matColumnDef="name">

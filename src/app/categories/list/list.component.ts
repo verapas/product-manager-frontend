@@ -42,10 +42,12 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'active', 'actions'];
 
+  // Kategorien beim Laden der komponenten abrufen
   ngOnInit() {
     this.loadCategories();
   }
 
+  // Holt alle Kategorien aus der API und speichert sie im Signal
   loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (categoryList) => {
@@ -59,10 +61,12 @@ export class ListComponent implements OnInit {
     });
   }
 
+  // Weiterleitung zur Bearbeitungsseite einer Kategorie
   editCategory(categoryId: number) {
     this.router.navigate(['/categories/edit', categoryId]);
   }
 
+  // Löscht eine Kategorie nach Bestätigung und lädt die Liste neu
   deleteCategory(categoryId: number) {
     if (confirm('Möchtest du diese Kategorie wirklich löschen?')) {
       this.categoryService.deleteCategoryById(categoryId).subscribe({

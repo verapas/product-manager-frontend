@@ -1,17 +1,22 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { jwtDecode } from 'jwt-decode';
 import { UserControllerService, UserShowDto } from '../../openapi-client';
+import {MatCard} from '@angular/material/card';
 
 interface JwtPayload {
   email?: string;
   exp?: number;
+  roles?: string[];
 }
+
 @Component({
   selector: 'pm-dashboard',
   imports: [
-    MatButton
+    MatButton,
+    RouterLink,
+    MatCard
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -21,19 +26,28 @@ export class DashboardComponent implements OnInit {
   userService = inject(UserControllerService);
 
   fullName: string = 'Benutzer';
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
 
+  // Beim Laden des Dashboards prüfen, ob der Benutzer eingeloggt ist und Admin-Rechte hat
   ngOnInit() {
     const token = localStorage.getItem('ACCESS_TOKEN');
 
     if (!token) {
-      console.warn('Kein Token gefunden, Benutzer wird nicht geladen.');
+      console.warn('Kein Token gefunden.');
       return;
     }
 
+    this.isLoggedIn = true;
+
     try {
       const decoded: JwtPayload = jwtDecode<JwtPayload>(token);
+      if (decoded.roles?.includes('admin')) {
+        this.isAdmin = true;
+      }
+
       if (decoded.email) {
-        // Alle Benutzer abrufen und nach der E-Mail filtern
+        // Benutzer anhand der E-Mail suchen
         this.userService.getAllUsers().subscribe({
           next: (users: UserShowDto[]) => {
             const user = users.find(u => u.email === decoded.email);
@@ -56,10 +70,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  // Benutzer abmelden und zur Login-Seite weiterleiten
   logout() {
     console.log('Benutzer meldet sich ab...');
-    localStorage.removeItem('ACCESS_TOKEN'); // Token löschen
-    localStorage.clear(); // Optional: Alle lokalen Daten entfernen
+    localStorage.removeItem('ACCESS_TOKEN');
+    localStorage.clear();
+    this.isLoggedIn = false;
     this.router.navigate(['/auth/login']);
   }
 }

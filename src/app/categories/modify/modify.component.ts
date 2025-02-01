@@ -40,6 +40,8 @@ export class ModifyComponent implements OnInit {
   isEdit = false;
   categoryId: number | null = null;
 
+
+  // Prüft, ob eine ID in der URL vorhanden ist (Bearbeitungsmodus) und lädt die Kategorie
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     if (id) {
@@ -57,6 +59,7 @@ export class ModifyComponent implements OnInit {
     }
   }
 
+  // Speichert eine neue oder aktualisierte Kategorie
   onSubmit() {
     if (this.categoryForm.invalid) {
       this.categoryForm.markAllAsTouched();
@@ -81,6 +84,7 @@ export class ModifyComponent implements OnInit {
         },
       });
     } else {
+      // Erstellt eine neue Kategorie
       this.categoryService.createCategory(categoryData).subscribe({
         next: () => {
           this.toastr.success('Kategorie erfolgreich erstellt!', 'Erfolg');

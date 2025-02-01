@@ -55,6 +55,7 @@ export class RegisterComponent {
     confirmPassword: new FormControl('', [Validators.required]),
   }, { validators: this.passwordMatchValidator });
 
+  // Prüft, ob die Passwörter übereinstimmen.
   passwordMatchValidator(control: AbstractControl): Validators | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -63,6 +64,7 @@ export class RegisterComponent {
       : null;
   }
 
+  // Sendet das Registrierungsformular ab und nutzt den Endpoint um einen Benutzer zu erstellen ohne Admin-Rechte
   onSubmit() {
     this.errorMessage = null; // Fehlermeldung zurücksetzen
     this.registerFormGroup.markAllAsTouched();
@@ -73,7 +75,7 @@ export class RegisterComponent {
 
     const formData = this.registerFormGroup.value;
 
-    this.userControllerService.register({
+    this.userControllerService.registerWithoutAdminRights({
       firstName: formData.firstName!,
       lastName: formData.lastName!,
       street: formData.street!,

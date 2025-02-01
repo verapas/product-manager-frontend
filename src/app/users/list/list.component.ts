@@ -41,10 +41,12 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['email', 'isAdmin', 'actions'];
 
+  // Lädt die Benutzerliste beim Start der Komponente
   ngOnInit() {
     this.loadUsers();
   }
 
+  // Holt alle Benutzer aus der API und speichert sie im Signal
   loadUsers() {
     this.userService.getAllUsers().subscribe({
       next: (userList) => {
@@ -57,6 +59,7 @@ export class ListComponent implements OnInit {
     });
   }
 
+  // Befördert einen Benutzer zum Admin nach Bestätigung
   promoteToAdmin(userId: number) {
     if (confirm('Möchtest du diesen Benutzer wirklich zum Admin befördern?')) {
       this.userService.promoteUser(userId).subscribe({

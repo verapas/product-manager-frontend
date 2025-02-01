@@ -40,6 +40,9 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
+
+
+  // Login Formular absenden
   onSubmit() {
     this.errorMessage = null;
 
@@ -59,13 +62,11 @@ export class LoginComponent {
         if (response.token) {
           console.log('Bearer Token:', response.token);
 
-          // Token im localStorage speichern
           localStorage.setItem('ACCESS_TOKEN', response.token);
 
-          // Erfolgsmeldung anzeigen
           this.toastr.success('Login erfolgreich! Willkommen zurück.', 'Erfolg');
 
-          // Weiterleitung zum Dashboard
+
           this.router.navigate(['/general-sites/dashboard']);
         } else {
           this.errorMessage = 'Token fehlt in der API-Antwort.';
