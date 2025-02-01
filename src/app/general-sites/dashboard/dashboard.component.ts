@@ -11,10 +11,6 @@ interface JwtPayload {
   roles?: string[];
 }
 
-/**
- * @component DashboardComponent
- * @description Zeigt das Dashboard an und überprüft, ob der Benutzer eingeloggt ist und Adminrechte hat.
- */
 @Component({
   selector: 'pm-dashboard',
   imports: [
@@ -29,21 +25,11 @@ export class DashboardComponent implements OnInit {
   router = inject(Router);
   userService = inject(UserControllerService);
 
-  /** Enthält den vollständigen Namen des eingeloggten Benutzers */
   fullName: string = 'Benutzer';
-
-  /** Gibt an, ob der Benutzer eingeloggt ist */
   isLoggedIn: boolean = false;
-
-  /** Gibt an, ob der Benutzer Adminrechte hat */
   isAdmin: boolean = false;
 
-  /**
-   * @method ngOnInit
-   * @description Wird beim Laden des Dashboards ausgeführt.
-   * Prüft, ob der Benutzer eingeloggt ist und ob er Adminrechte hat.
-   * Falls der Benutzer authentifiziert ist, werden seine Benutzerdaten geladen.
-   */
+  // Beim Laden des Dashboards prüfen, ob der Benutzer eingeloggt ist und Admin-Rechte hat
   ngOnInit() {
     const token = localStorage.getItem('ACCESS_TOKEN');
 
@@ -61,7 +47,7 @@ export class DashboardComponent implements OnInit {
       }
 
       if (decoded.email) {
-        // Benutzer anhand der E-Mail aus der API abrufen
+        // Benutzer anhand der E-Mail suchen
         this.userService.getAllUsers().subscribe({
           next: (users: UserShowDto[]) => {
             const user = users.find(u => u.email === decoded.email);
@@ -84,10 +70,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  /**
-   * @method logout
-   * @description Meldet den Benutzer ab, löscht den Token und leitet zur Login-Seite weiter.
-   */
+  // Benutzer abmelden und zur Login-Seite weiterleiten
   logout() {
     console.log('Benutzer meldet sich ab...');
     localStorage.removeItem('ACCESS_TOKEN');

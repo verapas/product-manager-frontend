@@ -12,12 +12,6 @@ import { MatInput } from '@angular/material/input';
 import {Router, RouterLink} from '@angular/router';
 import {UserControllerService} from '../../openapi-client';
 
-/**
- * @component RegisterComponent
- * @description Ermöglicht es neuen Benutzern, sich zu registrieren.
- * Der Registrierungsprozess verwendet den Endpoint `registerWithoutAdminRights`,
- * um sicherzustellen, dass neue Benutzer keine Admin-Rechte erhalten.
- */
 @Component({
   selector: 'pm-register',
   standalone: true,
@@ -40,12 +34,9 @@ import {UserControllerService} from '../../openapi-client';
 export class RegisterComponent {
   userControllerService = inject(UserControllerService);
   router = inject(Router);
-  errorMessage: string | null = null;
 
-  /**
-   * @property registerFormGroup
-   * @description Enthält das Registrierungsformular mit Validierungen.
-   */
+  errorMessage: string | null = null; // Für dynamische Fehlermeldungen
+
   registerFormGroup = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
     lastName: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
@@ -64,12 +55,7 @@ export class RegisterComponent {
     confirmPassword: new FormControl('', [Validators.required]),
   }, { validators: this.passwordMatchValidator });
 
-  /**
-   * @method passwordMatchValidator
-   * @description Prüft, ob die Passwörter übereinstimmen.
-   * @param control Das Formularsteuerungselement
-   * @returns `null`, wenn die Passwörter übereinstimmen, sonst ein Fehlerobjekt `{ passwordsDoNotMatch: true }`
-   */
+  // Prüft, ob die Passwörter übereinstimmen.
   passwordMatchValidator(control: AbstractControl): Validators | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -78,12 +64,7 @@ export class RegisterComponent {
       : null;
   }
 
-  /**
-   * @method onSubmit
-   * @description Verarbeitet das Absenden des Registrierungsformulars.
-   * Prüft, ob das Formular valide ist, sendet eine Registrierungsanfrage an das Backend
-   * und leitet den Benutzer nach erfolgreicher Registrierung zur Login-Seite weiter.
-   */
+  // Sendet das Registrierungsformular ab und nutzt den Endpoint um einen Benutzer zu erstellen ohne Admin-Rechte
   onSubmit() {
     this.errorMessage = null; // Fehlermeldung zurücksetzen
     this.registerFormGroup.markAllAsTouched();

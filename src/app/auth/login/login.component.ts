@@ -28,46 +28,21 @@ import {ToastrService} from 'ngx-toastr';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-/**
- * @component LoginComponent
- * @description Ermöglicht es Benutzern, sich in die Anwendung einzuloggen.
- * Beim erfolgreichen Login wird ein JWT-Token gespeichert und der Benutzer weitergeleitet.
- */
-@Component({
-  selector: 'pm-login',
-  imports: [
-    FormsModule,
-    MatCard,
-    MatCardHeader,
-    MatCardContent,
-    MatCardActions,
-    ReactiveFormsModule,
-    MatFormField,
-    MatButton,
-    MatInput,
-    MatLabel,
-    MatError,
-    RouterLink
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
-})
 export class LoginComponent {
   userControllerService = inject(UserControllerService);
   toastr = inject(ToastrService);
   router = inject(Router);
+
   errorMessage: string | null = null;
+
   loginFormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
   });
 
-  /**
-   * @method onSubmit
-   * @description Verarbeitet das Absenden des Login-Formulars.
-   * Prüft, ob das Formular valide ist, sendet eine Login-Anfrage an das Backend
-   * und speichert das JWT-Token bei Erfolg.
-   */
+
+
+  // Login Formular absenden
   onSubmit() {
     this.errorMessage = null;
 
@@ -87,12 +62,11 @@ export class LoginComponent {
         if (response.token) {
           console.log('Bearer Token:', response.token);
 
-          // Speichert das Token im LocalStorage
           localStorage.setItem('ACCESS_TOKEN', response.token);
 
           this.toastr.success('Login erfolgreich! Willkommen zurück.', 'Erfolg');
 
-          // Weiterleitung zum Dashboard nach erfolgreichem Login
+
           this.router.navigate(['/general-sites/dashboard']);
         } else {
           this.errorMessage = 'Token fehlt in der API-Antwort.';

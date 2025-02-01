@@ -13,13 +13,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MatCard} from '@angular/material/card';
 import {ToastrService} from 'ngx-toastr';
 
-/**
- * @method ngOnInit
- * @description Lädt Kategorien und prüft, ob ein Produkt bearbeitet wird.
- */
 @Component({
   selector: 'pm-modify',
-  standalone: true,
   imports: [
     MatFormField,
     MatInput,
@@ -57,11 +52,7 @@ export class ModifyComponent implements OnInit {
   productId: number | null = null;
   pageTitle = 'Produkt Erstellen';
 
-  /**
-   * @method ngOnInit
-   * @description Lädt Kategorien und prüft, ob ein Produkt bearbeitet wird.
-   * Falls ein Produkt bearbeitet wird, werden die bestehenden Daten ins Formular geladen.
-   */
+  // Lädt Kategorien und prüft, ob ein Produkt bearbeitet wird
   ngOnInit() {
     this.categoryService.getAllCategories().subscribe((value) => {
       this.categories.set(value);
@@ -94,10 +85,7 @@ export class ModifyComponent implements OnInit {
     }
   }
 
-  /**
-   * @method onSubmit
-   * @description Erstellt oder aktualisiert ein Produkt je nach Bearbeitungsmodus.
-   */
+  // Erstellt oder aktualisiert ein Produkt je nach Bearbeitungsmodus
   onSubmit() {
     if (this.productFormGroup.invalid) {
       this.productFormGroup.markAllAsTouched();
