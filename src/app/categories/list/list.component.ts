@@ -14,21 +14,16 @@ import {
 } from '@angular/material/table';
 import {MatButton} from '@angular/material/button';
 
+/**
+ * @component ListComponent
+ * @description Zeigt eine Liste aller Kategorien in einer Tabelle an.
+ */
 @Component({
   selector: 'pm-list',
   imports: [
     MatCard,
     MatTable,
-    MatHeaderCell,
-    MatColumnDef,
-    MatCellDef,
-    MatCell,
-    MatHeaderCellDef,
     MatButton,
-    MatHeaderRow,
-    MatRow,
-    MatRowDef,
-    MatHeaderRowDef,
     RouterLink
   ],
   templateUrl: './list.component.html',
@@ -42,16 +37,22 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'active', 'actions'];
 
-  // Kategorien beim Laden der komponenten abrufen
+  /**
+   * @method ngOnInit
+   * @description Wird beim Laden der Komponente aufgerufen und lädt alle Kategorien.
+   */
   ngOnInit() {
     this.loadCategories();
   }
 
-  // Holt alle Kategorien aus der API und speichert sie im Signal
+  /**
+   * @method loadCategories
+   * @description Ruft alle Kategorien aus der API ab und speichert sie in `categories`.
+   */
   loadCategories() {
     this.categoryService.getAllCategories().subscribe({
       next: (categoryList) => {
-        console.log('Geladene Kategorien:', categoryList); // Debugging
+        console.log('Geladene Kategorien:', categoryList);
         this.categories.set(categoryList);
       },
       error: (err) => {
@@ -61,12 +62,20 @@ export class ListComponent implements OnInit {
     });
   }
 
-  // Weiterleitung zur Bearbeitungsseite einer Kategorie
+  /**
+   * @method editCategory
+   * @description Leitet zur Bearbeitungsseite einer Kategorie weiter.
+   * @param categoryId Die ID der zu bearbeitenden Kategorie.
+   */
   editCategory(categoryId: number) {
     this.router.navigate(['/categories/edit', categoryId]);
   }
 
-  // Löscht eine Kategorie nach Bestätigung und lädt die Liste neu
+  /**
+   * @method deleteCategory
+   * @description Löscht eine Kategorie nach Bestätigung und lädt die Liste neu.
+   * @param categoryId Die ID der zu löschenden Kategorie.
+   */
   deleteCategory(categoryId: number) {
     if (confirm('Möchtest du diese Kategorie wirklich löschen?')) {
       this.categoryService.deleteCategoryById(categoryId).subscribe({

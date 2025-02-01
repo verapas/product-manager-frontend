@@ -15,6 +15,10 @@ import {CurrencyPipe} from '@angular/common';
 import {MatCard} from '@angular/material/card';
 import {ToastrService} from 'ngx-toastr';
 
+/**
+ * @method ngOnInit
+ * @description Wird beim Laden der Komponente ausgeführt und ruft die Produktliste ab.
+ */
 @Component({
   selector: 'pm-list',
   imports: [
@@ -44,12 +48,14 @@ export class ListComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'price', 'stock', 'actions'];
 
-  // Lädt die Produktliste beim Start der Komponente
   ngOnInit() {
     this.loadProducts();
   }
 
-  // Holt alle Produkte aus der API und speichert sie im Signal
+  /**
+   * @method loadProducts
+   * @description Holt alle Produkte aus der API und speichert sie in `products`.
+   */
   loadProducts() {
     this.productService.getAllProducts().subscribe({
       next: (productList) => {
@@ -62,12 +68,20 @@ export class ListComponent implements OnInit {
     });
   }
 
-  // Weiterleitung zur Bearbeitungsseite eines Produkts
+  /**
+   * @method editProduct
+   * @description Leitet zur Bearbeitungsseite eines Produkts weiter.
+   * @param productId Die ID des zu bearbeitenden Produkts.
+   */
   editProduct(productId: number) {
     this.router.navigate(['/products/edit', productId]);
   }
 
-  // Löscht ein Produkt nach Bestätigung und lädt die Liste neu
+  /**
+   * @method deleteProduct
+   * @description Löscht ein Produkt nach Bestätigung und lädt die Liste neu.
+   * @param productId Die ID des zu löschenden Produkts.
+   */
   deleteProduct(productId: number) {
     if (confirm('Möchtest du dieses Produkt wirklich löschen?')) {
       this.productService.deleteProductById(productId).subscribe({

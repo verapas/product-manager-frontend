@@ -6,6 +6,11 @@ import {MatCard, MatCardActions} from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
 import {MatList, MatListItem} from '@angular/material/list';
 
+/**
+ * @component DetailComponent
+ * @description Zeigt die Details einer Kategorie basierend auf der übergebenen ID.
+ * Falls die Kategorie nicht gefunden wird, erfolgt eine Weiterleitung zur Kategorienliste.
+ */
 @Component({
   selector: 'pm-detail',
   imports: [
@@ -23,10 +28,13 @@ export class DetailComponent implements OnInit {
   router = inject(Router);
   toastr = inject(ToastrService);
   categoryService = inject(CategoryControllerService);
-
   category: CategoryDetailDto | null = null;
 
-  // Lädt die Kategorie beim aufruf der Detailseite
+  /**
+   * @method ngOnInit
+   * @description Lädt die Kategorie anhand der ID aus der URL.
+   * Falls die Kategorie nicht gefunden wird, erfolgt eine Fehlermeldung und Weiterleitung.
+   */
   ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
 
